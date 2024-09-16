@@ -1,20 +1,30 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
+
 
 export default function App () {
   
   const [valor, setValor] = useState("");
 
   const [result, setResult] = useState([]);
+
+
  
   const searchResult = async () => {
-    const API_KEY = 'Tgsh14TNC0V0DAUt2rX72_QBzF22qyO-khCA0SB7kA4'
-    const URL = `https://api.unsplash.com/search/photos?&query=${valor}&client_id=${API_KEY}`
+    const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY;
+    const URL = `https://api.unsplash.com/search/photos?&query=${valor}&client_id=${API_KEY}`;
 
     const response = await fetch(URL);
     const data = await response.json();
     setResult (data.results)
     console.log(data)
   }
+
+  useEffect(() => {
+    if (valor){
+      searchResult ("");
+    }
+  }, [valor])
 
  
   return (
