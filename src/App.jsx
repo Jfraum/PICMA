@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-
+import { motion } from "framer-motion";
 
 export default function App () {
   
@@ -20,52 +20,60 @@ export default function App () {
     console.log(data)
   }
 
-  useEffect(() => {
-    if (valor){
-      searchResult ("");
-    }
-  }, [valor])
+ 
 
+  const mensaje = result.length > 0 ? "These are your results" : "Search for a photo";
  
   return (
     <>
-    <header className="flex flex-col items-center font-quantico text-3xl py-10">
+    <motion.header 
+     initial={{ opacity: 0, scale: 0.5 }}
+     animate={{ opacity: 1, scale: 1 }}
+     transition={{ duration: 0.5 }}
+    className="flex flex-col items-center font-quantico text-3xl py-10">
         <h1 className="py-2"> PICMA </h1>
         <p className="pt-5"> here you can search for any of your photo that you want </p>
-      </header>
+      </motion.header>
       
         
       
 
         <section className="flex flex-row  justify-center gap-2" >
 
-          <input 
+          <input
+          
           onChange={e => setValor(e.target.value)}
           placeholder="Search what you want" 
           type="search"  
           className=" w-64 p-3 rounded-lg bg-252422 dark:placeholder-gray-400 dark:text-fffcf2 "
           />  
           
-          <button 
+          <motion.button 
+           whileHover={{ scale: 1.1 }}
+           whileTap={{ scale: 0.9  }}
           onClick={() => searchResult()}
           className="w-15 p-3 rounded-lg bg-252422 text-fffcf2"
-         > Search </button>
+         > Search </motion.button>
 
         </section>
 
         <section className="flex flex-col items-center font-quantico text-3xl pt-10">
          
-          <h2 className="flex">These are your results</h2>
+          <h2 className="">{mensaje}</h2>
 
-          <div className="grid grid-cols-4 gap-2 w-full">
+          <div className="grid grid-cols-3 gap-2 w-full pt-5">
             { 
               result.map((elemento,index) => {
                 return (
 
-                  <div key={index} className=" shadow-2xl">
+                  <motion.div 
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }} 
+                  transition={{ duration: 1 }}
+                  key={index} className=" shadow-2xl">
 
                     <img src={elemento.urls.regular} className="w-full h-full object-cover rounded-lg " />
-                  </div>
+                  </motion.div>
                 )
               })
             }
