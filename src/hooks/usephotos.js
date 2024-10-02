@@ -15,11 +15,11 @@ export function usePhotos ({ search }) {
       image: photo.urls.full
     }))
 
-  
+    const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY
 
     const getPhotos = () => {
       if (search) {
-        fetch(`https://api.unsplash.com/search/photos?query=${search}&client_id=Tgsh14TNC0V0DAUt2rX72_QBzF22qyO-khCA0SB7kA4`)
+        fetch(`https://api.unsplash.com/search/photos?query=${search}&client_id=${API_KEY}`)
         .then (res => res.json())
         .then(json => {
           setResponsePhotos(json)
