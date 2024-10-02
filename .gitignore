@@ -23,6 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
-usePhotos.js
-useSearch.js
+.git/hooks/usePhotos.js
+.git/hooks/useSearch.js
+
 
