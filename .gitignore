@@ -23,5 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .env
-hooks
+usePhotos.js
+useSearch.js
 
