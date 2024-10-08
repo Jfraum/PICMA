@@ -1,34 +1,34 @@
-import withResults from '../mocks/with-results.json'
-import withoutResults from '../mocks/no-results.json'
-import { useState } from 'react'
-
-
+import { searchPhotos } from '../services/photos'
+import { useRef, useState } from 'react'
 
 export function usePhotos ({ search }) {
 
-  const [responsePhotos, setResponsePhotos] = useState([])
+  const [photos, setPhotos] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState (null)
+  const previusSearch = useRef(search)
 
-    const photos = responsePhotos.results
-  
-    const mappedPhotos = photos?.map(photo => ({
-      id: photo.id,
-      image: photo.urls.full
-    }))
 
-    const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY
+    const getPhotos = async () => {
+      if ( search == previusSearch.current) return
 
-    const getPhotos = () => {
-      if (search) {
-        fetch(`https://api.unsplash.com/search/photos?query=${search}&client_id=${API_KEY}`)
-        .then (res => res.json())
-        .then(json => {
-          setResponsePhotos(json)
-        })
-      }
-      else {
-        setResponsePhotos(withoutResults)
-      }
+
+
+     try {
+      setLoading(true)
+      setError(null)
+      previusSearch.current = search
+      const newPhotos = await searchPhotos ({ search })
+     setPhotos(newPhotos)
     }
+    catch (e) {
+      setError(e.message)
+
+    }
+    finally {
+      setLoading(false)
+    }
+  }
   
-    return {photos: mappedPhotos, getPhotos}
+    return {photos, getPhotos, loading, error}
   }

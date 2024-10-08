@@ -10,7 +10,7 @@ export default function App () {
 
   
   const {search, updateSearch, error} = useSearch()
-  const {photos, getPhotos} = usePhotos({ search })
+  const {photos, loading, getPhotos} = usePhotos({ search })
 
 
   const handleSubmit = (event) => {
@@ -33,9 +33,9 @@ export default function App () {
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
-      className="flex flex-col items-center font-quantico text-3xl py-10">
+      className="flex flex-col items-center font-quantico text-xl py-10">
 
-        <h1 className="flex justify-center text-3xl"> Picma </h1>
+        <h1 className="flex justify-center text-5xl"> Picma </h1>
         <p className="pt-5"> Aquí puedes buscar cualquier foto que desees </p>
         <form 
         onSubmit={handleSubmit}
@@ -50,7 +50,6 @@ export default function App () {
           <motion.button 
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9  }}
-          onClick={() => searchResult(valor)}
           type="submit" 
           className="w-15 p-3 rounded-lg bg-252422 text-fffcf2">
             buscar
@@ -60,7 +59,9 @@ export default function App () {
       </motion.header> 
 
     <main>
-      <Photos photos={photos} />
+      {
+        loading ? <p>Cargando...</p> : <Photos photos={photos} />   }
+      
     </main>
 
     </>
