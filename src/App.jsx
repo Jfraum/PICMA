@@ -1,30 +1,43 @@
-import React from "react";
+import React, { useEffect, useState, useCallback} from "react";
 
 import { usePhotos } from "./hooks/usephotos";
 import { Photos } from "./components/Photos";
 import { useSearch } from "./hooks/useSearch";
 import { motion } from "framer-motion";
+import debounce from "just-debounce-it";
 
 export default function App () {
 
-
+  const [sort, setSort] = useState(false)
   
   const {search, updateSearch, error} = useSearch()
-  const {photos, loading, getPhotos} = usePhotos({ search })
+  const {photos, loading, getPhotos} = usePhotos({ search , sort })
 
+  const debouncedGetPhotos = useCallback (debounce ( search => {
+    console.log('search', search)
+    getPhotos({search})
+  }, 300)
+  ,[])
 
   const handleSubmit = (event) => {
 
     event.preventDefault() 
-    getPhotos()
+    getPhotos({search})
+  }
+
+  const handleSort = () => {
+    setSort(!sort)
   }
 
   const handleChange = (event) => {
-    
-    updateSearch(event.target.value)
+    const newSearch = event.target.value
+
+    updateSearch(newSearch)
+
+    debouncedGetPhotos(newSearch)
   }
 
-  
+
  
   return (
     <>
@@ -46,6 +59,8 @@ export default function App () {
           value={search}
           name="query"
           placeholder="busca tus películas aquí..." className="w-72 h-15 rounded-lg bg-252422 dark:placeholder-gray-400 dark:text-fffcf2"/>
+
+          <input type="checkbox" onChange={handleSort}  checked={sort}/>
           
           <motion.button 
           whileHover={{ scale: 1.1 }}
@@ -60,7 +75,7 @@ export default function App () {
 
     <main>
       {
-        loading ? <p>Cargando...</p> : <Photos photos={photos} />   }
+        loading ? <p className="flex justify-center font-quantico text-2xl">Cargando...</p> : <Photos photos={photos} />   }
       
     </main>
 
