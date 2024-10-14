@@ -14,7 +14,15 @@ export default {
       colors: {
         '252422': '#252422',
         'fffcf2' : '#fffcf2',
+      },
+      placeholder: {
+        sm: 'text-xl'
       }
+    },
+  },
+  variants: {
+    extend:{
+      placeholder:['responsive'],
     },
   },
   plugins: [],

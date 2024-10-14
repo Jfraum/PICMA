@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback} from "react";
+import React, {useCallback} from "react";
 
 import { usePhotos } from "./hooks/usephotos";
 import { Photos } from "./components/Photos";
@@ -42,35 +42,40 @@ export default function App () {
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
-      className="flex flex-col items-center font-quantico text-xl py-10">
+      className="flex flex-col items-center font-quantico">
 
-        <h1 className="flex justify-center text-5xl"> Picma </h1>
-        <p className="pt-5"> Here you can seach for any photo </p>
+        <h1 
+        className="text-3xl sm:text-4xl md:text-6xl xl:text-8xl 2xl:text-9xl"> 
+        Picma 
+        </h1>
+        <p className="text-lg sm:text-xl md:text-2xl xl:text-5xl 2xl:text-7xl"> Here you can seach for any photo </p>
+
         <form 
         onSubmit={handleSubmit}
-        className="flex flex-row gap-5 pt-10">
+        className="flex flex-col items-center pt-5 gap-5 sm:flex-row">
 
           <input 
           onChange={handleChange}
           value={search}
           name="query"
-          placeholder="Search for your photo..." className="w-72 h-15 rounded-lg bg-252422 dark:placeholder-gray-400 dark:text-fffcf2"/>
+          placeholder="Search for your photo..." 
+          className="w-full p-2 text-sm sm:text-xl xl:text-4xl 2xl:text-6xl 2xl:gap-5 rounded-lg bg-252422 placeholder:text-fffcf2 text-fffcf2 placeholder:text-sm placeholder:text-center md:placeholder:text-lg xl:placeholder:text-2xl 2xl:placeholder:text-5xl"/>
 
           
           <motion.button 
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9  }}
           type="submit" 
-          className="w-15 p-3 rounded-lg bg-252422 text-fffcf2">
+          className="md:text-lg xl:text-4xl 2xl:text-7xl p-2 rounded-lg bg-252422 text-fffcf2">
             Search
           </motion.button>
         </form>
-        {error && <p className="text-slate-950 text-center pt-5">{error}</p>}
+        {error && <p className="pt-5">{error}</p>}
       </motion.header> 
 
-    <main>
+    <main className="font-quantico flex justify-center items-center">
       {
-        loading ? <p className="flex justify-center font-quantico text-2xl">Loading...</p> : <Photos photos={photos} />   }
+        loading ? <p className="">Loading...</p> : <Photos photos={photos} />   }
       
     </main>
 
