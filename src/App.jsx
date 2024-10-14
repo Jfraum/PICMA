@@ -8,10 +8,9 @@ import debounce from "just-debounce-it";
 
 export default function App () {
 
-  const [sort, setSort] = useState(false)
   
   const {search, updateSearch, error} = useSearch()
-  const {photos, loading, getPhotos} = usePhotos({ search , sort })
+  const {photos, loading, getPhotos} = usePhotos({ search  })
 
   const debouncedGetPhotos = useCallback (debounce ( search => {
     console.log('search', search)
@@ -25,9 +24,6 @@ export default function App () {
     getPhotos({search})
   }
 
-  const handleSort = () => {
-    setSort(!sort)
-  }
 
   const handleChange = (event) => {
     const newSearch = event.target.value
@@ -49,7 +45,7 @@ export default function App () {
       className="flex flex-col items-center font-quantico text-xl py-10">
 
         <h1 className="flex justify-center text-5xl"> Picma </h1>
-        <p className="pt-5"> Aquí puedes buscar cualquier foto que desees </p>
+        <p className="pt-5"> Here you can seach for any photo </p>
         <form 
         onSubmit={handleSubmit}
         className="flex flex-row gap-5 pt-10">
@@ -58,16 +54,15 @@ export default function App () {
           onChange={handleChange}
           value={search}
           name="query"
-          placeholder="busca tus películas aquí..." className="w-72 h-15 rounded-lg bg-252422 dark:placeholder-gray-400 dark:text-fffcf2"/>
+          placeholder="Search for your photo..." className="w-72 h-15 rounded-lg bg-252422 dark:placeholder-gray-400 dark:text-fffcf2"/>
 
-          <input type="checkbox" onChange={handleSort}  checked={sort}/>
           
           <motion.button 
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9  }}
           type="submit" 
           className="w-15 p-3 rounded-lg bg-252422 text-fffcf2">
-            buscar
+            Search
           </motion.button>
         </form>
         {error && <p className="text-slate-950 text-center pt-5">{error}</p>}
@@ -75,7 +70,7 @@ export default function App () {
 
     <main>
       {
-        loading ? <p className="flex justify-center font-quantico text-2xl">Cargando...</p> : <Photos photos={photos} />   }
+        loading ? <p className="flex justify-center font-quantico text-2xl">Loading...</p> : <Photos photos={photos} />   }
       
     </main>
 

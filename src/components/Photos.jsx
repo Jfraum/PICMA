@@ -22,7 +22,7 @@ export function ListOfPhotos ({ photos }) {
 
 export function NoPhotosResults () {
     return (
-        <p className="flex justify-center font-quantico text-3xl py-10 pt-10 text-red-400"> No se encontraron fotos para esta búsqueda </p>
+        <p className="flex justify-center font-quantico text-3xl py-10 pt-10 text-red-400"> No photos found </p>
     )
 }
 

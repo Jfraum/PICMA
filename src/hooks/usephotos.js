@@ -2,7 +2,7 @@
 import { searchPhotos } from '../services/photos'
 import { useRef, useState, useMemo, useCallback } from 'react'
 
-export function usePhotos ({ search, sort }) {
+export function usePhotos ({ search }) {
 
   const [photos, setPhotos] = useState([])
   const [loading, setLoading] = useState(false)
@@ -29,13 +29,8 @@ export function usePhotos ({ search, sort }) {
     }
   }, [])
 
-  const sortedPhotos = useMemo (() => {
-    console.log('memosortedPhotos')
-    return sort
-    ? [...photos].sort((a, b) => a.id.localeCompare(b.id))
-    : photos
-  },[sort, photos] )
+
  
   
-    return {photos: sortedPhotos, getPhotos, loading, error}
+    return {photos, getPhotos, loading, error}
   }

@@ -14,12 +14,12 @@ export function useSearch () {
       }
   
       if (search == '') {
-        setError('No se puede buscar una foto vacía')
+        setError('Cant search for an empty photo')
         return
       }
   
       if (search.length < 2 ) {
-        setError('la búsqueda debe tener al menos 2 caracteres')
+        setError('search must be at least 2 characters')
   
         return
       }
